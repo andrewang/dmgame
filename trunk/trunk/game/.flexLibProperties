@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="com.dmgame.controller.EntityController"/>
+    <classEntry path="com.dmgame.game.DMGame"/>
+    <classEntry path="com.dmgame.game.DMCamera"/>
+    <classEntry path="com.dmgame.object.RenderObject"/>
+    <classEntry path="com.dmgame.object.EntityObject"/>
+    <classEntry path="com.dmgame.entity.GameEntity"/>
+    <classEntry path="com.dmgame.map.Tiles"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

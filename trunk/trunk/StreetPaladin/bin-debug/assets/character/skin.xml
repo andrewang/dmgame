@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Object>
+		<Name>女主角</Name>
+		<ID>1</ID>
+		<PictureFolder>assets/character/1/</PictureFolder>
+		<ActionFile>assets/character/1/action.xml</ActionFile>
+	</Object>
+</Data>

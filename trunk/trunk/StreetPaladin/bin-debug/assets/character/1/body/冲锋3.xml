@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Data>
+	<Picture>assets/character/1/body/冲锋3.png</Picture>
+	<Width>1600</Width>
+	<Height>220</Height>
+	<Line>1</Line>
+	<Frame>4</Frame>
+	<CenterPos>300,164</CenterPos>
+</Data>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Data>
+	<Picture>assets/character/1/body/移动.png</Picture>
+	<Width>3600</Width>
+	<Height>1100</Height>
+	<Line>5</Line>
+	<Frame>9</Frame>
+	<CenterPos>200,164</CenterPos>
+</Data>
