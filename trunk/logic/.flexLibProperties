@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="com.dmgame.logic.Logic"/>
+    <classEntry path="com.dmgame.asset.MapAssetEntry"/>
+    <classEntry path="com.dmgame.entity.EntityDirections"/>
+    <classEntry path="com.dmgame.entity.MapEntity"/>
+    <classEntry path="com.dmgame.entity.MapEntityState"/>
+    <classEntry path="com.dmgame.entity.MapEntityStateMoveTarget"/>
+    <classEntry path="com.dmgame.entity.MapEntityStateStandBy"/>
+    <classEntry path="com.dmgame.entity.MapEntityStateSkill"/>
+    <classEntry path="com.dmgame.entity.MapEntityDirections"/>
+    <classEntry path="com.dmgame.entity.MapEntity8Directions"/>
+    <classEntry path="com.dmgame.entity.MapEntity2Directions"/>
+    <classEntry path="com.dmgame.entity.MapEntityStateGroup"/>
+    <classEntry path="com.dmgame.entity.MapEntityStateMoveDirection"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

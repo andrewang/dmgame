@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Data>
+	<Picture>assets/character/1/body/上挑.png</Picture>
+	<Width>3200</Width>
+	<Height>220</Height>
+	<Line>1</Line>
+	<Frame>8</Frame>
+	<CenterPos>200,164</CenterPos>
+</Data>

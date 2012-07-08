@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Data>
+	<Picture>assets/character/1/body/下挥.png</Picture>
+	<Width>2400</Width>
+	<Height>220</Height>
+	<Line>1</Line>
+	<Frame>6</Frame>
+	<CenterPos>200,164</CenterPos>
+</Data>

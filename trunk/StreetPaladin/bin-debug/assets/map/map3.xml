@@ -1,0 +1,37 @@
+<map>
+  <id>3</id>
+  <hasTile>0</hasTile>
+  <loopbg/>
+  <tileFormat>jpg</tileFormat>
+  <tileX>620</tileX>
+  <tileY>360</tileY>
+  <mapW>6200</mapW>
+  <mapH>3600</mapH>
+  <music/>
+  <script/>
+  <npc/>
+  <build/>
+  <roadpoint>
+    <obj>
+      <posx>2740</posx>
+      <posy>572</posy>
+      <toMap>5</toMap>
+      <toX>500</toX>
+      <toY>1250</toY>
+    </obj>
+    <obj>
+      <posx>56</posx>
+      <posy>2219</posy>
+      <toMap>4</toMap>
+      <toX>2500</toX>
+      <toY>1280</toY>
+    </obj>
+    <obj>
+      <posx>1226</posx>
+      <posy>3548</posy>
+      <toMap>6</toMap>
+      <toX>5700</toX>
+      <toY>3200</toY>
+    </obj>
+  </roadpoint>
+</map>
