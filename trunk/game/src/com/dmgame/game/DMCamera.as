@@ -191,7 +191,7 @@ package com.dmgame.game
 				}
 				else {
 					currentPos_.x += dx/movePer_*moveSpeedx_;
-					currentPos_.y += dx/movePer_*moveSpeedy_;
+					currentPos_.y += dy/movePer_*moveSpeedy_;
 				}
 			}
 		}
