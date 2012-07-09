@@ -32,7 +32,7 @@ package
 		public function onLoadAssetsComplete():void
 		{
 			// 初始化地图
-			logic_.mapID = 2;
+			logic_.mapID = 1;
 			
 			// 放置一个玩家到地图中
 			var entity:GameEntity = new GameEntity;
