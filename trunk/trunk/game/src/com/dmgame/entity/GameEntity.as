@@ -1,10 +1,13 @@
 package com.dmgame.entity
 {
+	import com.dmgame.game.DMGame;
 	import com.dmgame.map.Map;
 	import com.dmgame.sprite.DMSprite;
+	import com.dmgame.sprite.DMSpriteAgent;
 	import com.dmgame.sprite.DMSpritePool;
 	
 	import flash.display.BitmapData;
+	import flash.display.Sprite;
 	import flash.geom.Point;
 	
 	/**
@@ -14,8 +17,13 @@ package com.dmgame.entity
 	{
 		protected var sprite_:DMSprite; // 动作画片
 		
+		protected var body_:Sprite=new Sprite;
+		protected var sprite_agent_:DMSpriteAgent = new DMSpriteAgent
+		
 		public function GameEntity()
 		{
+			DMGame.singleton_.addChild(body_);
+			body_.addChild(sprite_agent_)
 		}
 		
 		/**
@@ -27,6 +35,8 @@ package com.dmgame.entity
 				DMSpritePool.singleton_.freeSprite(sprite_.file);
 				sprite_ = null;
 			}
+			
+			sprite_agent_.free();
 		}
 		
 		/**
@@ -61,6 +71,8 @@ package com.dmgame.entity
 					sprite_ = null;
 				}
 			}
+			
+			sprite_agent_.sprite_ = sprite_;
 		}
 		
 		/**
@@ -89,9 +101,17 @@ package com.dmgame.entity
 				
 				if(direction_ >= 0) {
 					sprite_.render(direction, action_.currentFrame, screen, pos);
+					
+					sprite_agent_.render(direction, action_.currentFrame);
+					body_.x = pos_.x - fixPoint.x - 50;
+					body_.y = pos_.y - fixPoint.y;	
 				}
 				else {
 					sprite_.render(-direction_, action_.currentFrame, screen, pos, true, true);
+					
+					sprite_agent_.render(-direction, action_.currentFrame, true);
+					body_.x = pos_.x - fixPoint.x - 50;
+					body_.y = pos_.y - fixPoint.y;	
 				}
 			}
 		}
@@ -106,9 +126,17 @@ package com.dmgame.entity
 				
 				if(direction_ == 2) {
 					sprite_.render(0, action_.currentFrame, screen, pos);
+					
+					sprite_agent_.render(0, action_.currentFrame);
+					body_.x = pos_.x - fixPoint.x - 50;
+					body_.y = pos_.y - fixPoint.y;	
 				}
-				else if(direction_ == -2) {
+				else {
 					sprite_.render(0, action_.currentFrame, screen, pos, true, true);
+					
+					sprite_agent_.render(0, action_.currentFrame, true);
+					body_.x = pos_.x - fixPoint.x - 50;
+					body_.y = pos_.y - fixPoint.y;		
 				}
 			}
 		}

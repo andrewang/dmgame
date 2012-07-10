@@ -60,7 +60,7 @@ package com.dmgame.map
 			entities_ = [];
 			
 			// 读取配置文件
-			var mapAssetEntry:MapAssetEntry = Assets.singleton_.mapAsset_.entryArray_[id] as MapAssetEntry;
+			var mapAssetEntry:MapAssetEntry = Assets.singleton_.mapAsset_.entries_[id] as MapAssetEntry;
 			if(mapAssetEntry == null) {
 				return false;
 			}

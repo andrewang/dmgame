@@ -36,18 +36,18 @@ package com.dmgame.sprite
 		
 		private var infoLoader_:URLLoader; // 图片信息加载器
 		
-		private var bitmapData_:BitmapData; // 位图数据
+		private var bitmapDatas_:Array = []; // 位图数据
 		
-		private var bitmapDataMirror_:BitmapData; // 镜像位图数据
+		private var bitmapDataMirrors_:Array = []; // 镜像位图数据
 		
 		private var bitmapDataLoader_:Loader; // 图片加载器
 		
-		private var mirror_:Boolean = false; // 拥有镜像位图
+		private var have_mirror_:Boolean = false; // 拥有镜像位图
 		
 		/**
 		 * 构造函数，获取图片配置
 		 */
-		public function DMSprite(file:String, mirror:Boolean=false)
+		public function DMSprite(file:String, have_mirror:Boolean=false)
 		{
 			var array:Array = file.split('.');
 			var format:String = array[array.length-1];
@@ -67,7 +67,7 @@ package com.dmgame.sprite
 				bitmapDataLoader_.contentLoaderInfo.addEventListener(Event.COMPLETE, onBitmapDataLoadComplete);
 			}
 			file_ = file;
-			mirror_ = mirror;
+			have_mirror_ = have_mirror;
 		}
 		
 		/**
@@ -75,8 +75,14 @@ package com.dmgame.sprite
 		 */
 		public function destroy():void
 		{
-			if(bitmapData_) {
-				bitmapData_.dispose();
+			for(var line:int=0; line<line_; line++){
+				for(var frame:int=0; frame<frame_; frame++){
+					var tempPos:Point = new Point(0, 0);
+					bitmapDatas_[line][frame].dispose();
+					if(have_mirror_ == true){
+						bitmapDataMirrors_[line][frame].dispose();
+					}
+				}
 			}
 		}
 		
@@ -91,11 +97,24 @@ package com.dmgame.sprite
 		/**
 		 * 绘制函数，资料未加载完成之前无法正常绘制
 		 */
-		public function render(line:uint, frame:uint, screen:BitmapData, pos:Point, mergeAlpha:Boolean=true, mirror:Boolean=false):Boolean
+		public function render(line:uint, frame:uint, target:BitmapData, pos:Point, mergeAlpha:Boolean=true, mirror:Boolean=false):Boolean
 		{
-			if(bitmapData_ && line < line_ && frame < frame_) {
+			if(bitmapDatas_.length && line < line_ && frame < frame_ ) {
 				var tempPos:Point = new Point(pos.x - centerPos_.x, pos.y - centerPos_.y);
-				screen.copyPixels(mirror ? bitmapDataMirror_ : bitmapData_, new Rectangle(frame*frameWidth_, line*frameHeight_, frameWidth_, frameHeight_), tempPos, null, null, mergeAlpha);
+				target.copyPixels(mirror&&have_mirror_ ? bitmapDataMirrors_[line][frame] : bitmapDatas_[line][frame], new Rectangle(0, 0, frameWidth_, frameHeight_), tempPos, null, null, mergeAlpha);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		
+		public function fill2Bitmap(line:uint, frame:uint, target:DMSpriteAgent, mirror:Boolean=false):Boolean
+		{
+			if(bitmapDatas_.length && line < line_ && frame < frame_ ) {
+				target.bitmap_.bitmapData = mirror&&have_mirror_ ? bitmapDataMirrors_[line][frame] : bitmapDatas_[line][frame];
+				target.x = -centerPos_.x;
+				target.y = -centerPos_.y;
 				return true;
 			}
 			else {
@@ -158,10 +177,11 @@ package com.dmgame.sprite
 		private function onBitmapDataLoadComplete(event:Event):void
 		{
 			var bitmap:Bitmap = (bitmapDataLoader_.contentLoaderInfo.content as Bitmap);
-			bitmapData_ = bitmap.bitmapData.clone();
+			var bitmapData_:BitmapData = bitmap.bitmapData.clone();
+			var bitmapDataMirror_:BitmapData;
 			
-			if(mirror_ == true) {
-				var matrix:Matrix = new Matrix(-1, 0, 0, 1, bitmap.width);
+			if(have_mirror_ == true) {
+				var matrix:Matrix = new Matrix(-1, 0, 0, 1, bitmap.width);				
 				bitmapDataMirror_ = new BitmapData(bitmap.width, bitmap.height, true, 0x00000000);
 				bitmapDataMirror_.draw(bitmap, matrix);
 			}
@@ -173,6 +193,26 @@ package com.dmgame.sprite
 			frameWidth_ = width_ / frame_;
 			frameHeight_ = height_ / line_;
 
+			// 拷贝图片到帧
+			for(var line:int=0; line<line_; line++){
+				bitmapDatas_[line] = new Array;
+				if(have_mirror_ == true){
+					bitmapDataMirrors_[line] = new Array;
+				}
+				for(var frame:int=0; frame<frame_; frame++){
+					var tempPos:Point = new Point(0, 0);
+					bitmapDatas_[line][frame] = new BitmapData( frameWidth_, frameHeight_);
+					bitmapDatas_[line][frame].copyPixels( bitmapData_, new Rectangle(frame*frameWidth_, line*frameHeight_, frameWidth_, frameHeight_), tempPos, null, null);
+					if(have_mirror_ == true){
+						bitmapDataMirrors_[line][frame] = new BitmapData( frameWidth_, frameHeight_);
+						bitmapDataMirrors_[line][frame].copyPixels( bitmapDataMirror_, new Rectangle(frame*frameWidth_, line*frameHeight_, frameWidth_, frameHeight_), tempPos, null, null);
+					}
+				}
+			}
+			
+			bitmapData_.dispose();
+			if(have_mirror_)
+				bitmapDataMirror_.dispose();
 			// 移除位图资料加载器
 			bitmapDataLoader_.unload();
 			bitmapDataLoader_.contentLoaderInfo.removeEventListener(Event.COMPLETE, onBitmapDataLoadComplete);

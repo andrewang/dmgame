@@ -50,7 +50,7 @@ package com.dmgame.entity
 			}
 				
 			skinID_ = value;
-			skinAssetEntry_ = (Assets.singleton_.skinAsset_.entryArray_[skinID_] as SkinAssetEntry);
+			skinAssetEntry_ = (Assets.singleton_.skinAsset_.entries_[skinID_] as SkinAssetEntry);
 			
 			// 事件会丢失
 			loadAction(null);
@@ -92,7 +92,7 @@ package com.dmgame.entity
 			}
 			
 			// 读取动作条目
-			actionAssetEntry_ = (actionAsset_.entryArray_[actionName_] as ActionAssetEntry);
+			actionAssetEntry_ = (actionAsset_.entries_[actionName_] as ActionAssetEntry);
 			if(actionAssetEntry_) {
 				
 				// 创建动作对象

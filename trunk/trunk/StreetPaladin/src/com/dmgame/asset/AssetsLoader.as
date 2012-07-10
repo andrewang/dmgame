@@ -41,7 +41,7 @@ package com.dmgame.asset
 				return;
 			}
 			
-			for each(var skinAssetEntry:SkinAssetEntry in Assets.singleton_.skinAsset_.entryArray_)
+			for each(var skinAssetEntry:SkinAssetEntry in Assets.singleton_.skinAsset_.entries_)
 			{
 				var actionFile:String = skinAssetEntry.actionFile;
 				if(Assets.singleton_.actionAsset_[actionFile] == null) {
@@ -55,7 +55,7 @@ package com.dmgame.asset
 				}
 			}
 			
-			for each(var mapAssetEntry:MapAssetEntry in Assets.singleton_.mapAsset_.entryArray_)
+			for each(var mapAssetEntry:MapAssetEntry in Assets.singleton_.mapAsset_.entries_)
 			{
 				var config:String = mapAssetEntry.config_;
 				if(Assets.singleton_.mapGridAsset_[config] == null) {
