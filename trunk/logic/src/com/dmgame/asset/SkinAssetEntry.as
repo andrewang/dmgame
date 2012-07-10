@@ -27,7 +27,7 @@ package com.dmgame.asset
 		/**
 		 * 条目索引
 		 */
-		override public function ID():Object
+		override public function ID():*
 		{
 			return id;
 		}

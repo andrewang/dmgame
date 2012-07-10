@@ -1,11 +1,13 @@
 package com.dmgame.sprite
 {
+	import flash.utils.Dictionary;
+
 	/**
 	 * 精灵池
 	 */
 	public class DMSpritePool
 	{
-		public var sprites_:Array = []; // 精灵表
+		public var spriteReferences_:Dictionary = new Dictionary; // 精灵表
 		
 		static public var singleton_:DMSpritePool; // 单件
 		
@@ -17,17 +19,17 @@ package com.dmgame.sprite
 		/**
 		 * 获取精灵
 		 */
-		public function createSprite(file:String, mirror:Boolean=false):DMSprite
+		public function createSprite(file:String, have_mirror:Boolean=false):DMSprite
 		{
-			var spriteResource:DMSpriteResource = sprites_[file];
+			var spriteReference:DMSpriteReference = spriteReferences_[file];
 			
-			if(spriteResource == null) {
+			if(spriteReference == null) {
 				
-				spriteResource = new DMSpriteResource(file, mirror);
-				sprites_[file] = spriteResource;
+				spriteReference = new DMSpriteReference(file, have_mirror);
+				spriteReferences_[file] = spriteReference;
 			}
-			++spriteResource.ref_;
-			return spriteResource.sprite_;
+			++spriteReference.ref_;
+			return spriteReference.sprite_;
 		}
 		
 		/**
@@ -35,12 +37,12 @@ package com.dmgame.sprite
 		 */
 		public function freeSprite(file:String):void
 		{
-			var spriteResource:DMSpriteResource = sprites_[file];
+			var spriteReference:DMSpriteReference = spriteReferences_[file];
 			
-			if(spriteResource != null && spriteResource.ref_ > 0) {
+			if(spriteReference != null && spriteReference.ref_ > 0) {
 				
-				--spriteResource.ref_;
-				if(spriteResource.ref_ == 0) {
+				--spriteReference.ref_;
+				if(spriteReference.ref_ == 0) {
 					
 					// 放入垃圾回收列表，当前先不做回收
 				}
@@ -52,10 +54,10 @@ package com.dmgame.sprite
 		 */
 		protected function gcSprite(file:String):void
 		{
-			var spriteResource:DMSpriteResource = sprites_[file];
-			spriteResource.destroy();
+			var spriteReference:DMSpriteReference = spriteReferences_[file];
+			spriteReference.destroy();
 			
-			delete sprites_[file];
+			delete spriteReferences_[file];
 		}
 	}
 }

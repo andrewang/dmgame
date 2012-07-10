@@ -4,7 +4,8 @@
     <classEntry path="com.dmgame.asset.AssetEntry"/>
     <classEntry path="com.dmgame.asset.Asset"/>
     <classEntry path="com.dmgame.sprite.DMSpritePool"/>
-    <classEntry path="com.dmgame.sprite.DMSpriteResource"/>
+    <classEntry path="com.dmgame.sprite.DMSpriteReference"/>
+    <classEntry path="com.dmgame.sprite.DMSpriteAgent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

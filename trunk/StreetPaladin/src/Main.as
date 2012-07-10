@@ -17,6 +17,13 @@ package
 		{
 			var main:StreetPaladin = new StreetPaladin(stage);
 			addChild(main);
+			
+			addEventListener(Event.ENTER_FRAME, enterFrame);
+		}
+		
+		public function enterFrame(event:Event):void
+		{
+			
 		}
 	}
 }

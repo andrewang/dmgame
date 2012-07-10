@@ -50,6 +50,7 @@ package
 			camera_.setGameMap(logic_.map as GameMap);
 			camera_.setViewSize(stage_.stageWidth, stage_.stageHeight);
 			camera_.lookAtEntity(entity, false);
+			
 		}
 	}
 }
