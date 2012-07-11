@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
-    <classEntry path="com.dmgame.asset.AssetEntry"/>
-    <classEntry path="com.dmgame.asset.Asset"/>
-    <classEntry path="com.dmgame.sprite.DMSpritePool"/>
-    <classEntry path="com.dmgame.sprite.DMSpriteReference"/>
-    <classEntry path="com.dmgame.sprite.DMSpriteAgent"/>
+    <classEntry path="com.dmgame.xenon.asset.AssetEntry"/>
+    <classEntry path="com.dmgame.xenon.asset.Asset"/>
+    <classEntry path="com.dmgame.xenon.sprite.DMSpritePool"/>
+    <classEntry path="com.dmgame.xenon.sprite.DMSpriteReference"/>
+    <classEntry path="com.dmgame.xenon.sprite.DMSpriteAgent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

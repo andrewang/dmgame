@@ -1,10 +1,10 @@
 package
 {
 	import com.dmgame.asset.AssetsLoader;
-	import com.dmgame.entity.GameEntity;
-	import com.dmgame.game.DMGame;
-	import com.dmgame.map.GameMap;
-	import com.dmgame.object.EntityObject;
+	import com.dmgame.game.entity.GameEntity;
+	import com.dmgame.game.scene.DMGame;
+	import com.dmgame.game.map.GameMap;
+	import com.dmgame.game.object.EntityObject;
 	
 	import flash.display.Stage;
 	import flash.events.Event;
