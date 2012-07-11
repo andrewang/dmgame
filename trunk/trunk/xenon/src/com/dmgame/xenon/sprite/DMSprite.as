@@ -44,6 +44,8 @@ package com.dmgame.xenon.sprite
 		
 		private var have_mirror_:Boolean = false; // 拥有镜像位图
 		
+		private var loaded_:Boolean = false;
+		
 		/**
 		 * 构造函数，获取图片配置
 		 */
@@ -94,12 +96,17 @@ package com.dmgame.xenon.sprite
 			return file_;
 		}
 		
+		public function get loaded():Boolean{
+			return loaded_;
+		}
+		
 		/**
 		 * 绘制函数，资料未加载完成之前无法正常绘制
 		 */
 		public function render(line:uint, frame:uint, target:BitmapData, pos:Point, mergeAlpha:Boolean=true, mirror:Boolean=false):Boolean
 		{	
-			if(bitmapDatas_.length ) {
+			if( bitmapDatas_.length ) {
+				
 				if(line >= line_)  line = line_-1;
 				if(frame >= frame_)  frame = frame_-1;
 				
@@ -112,10 +119,10 @@ package com.dmgame.xenon.sprite
 			}
 		}
 		
-		public function fill2Bitmap(line:uint, frame:uint, target:DMSpriteAgent, mirror:Boolean=false):Boolean
+		public function fill2Agent(line:uint, frame:uint, target:DMSpriteAgent, mirror:Boolean=false):Boolean
 		{
 			if(bitmapDatas_.length && line < line_ && frame < frame_ ) {
-				target.bitmap_.bitmapData = mirror&&have_mirror_ ? bitmapDataMirrors_[line][frame] : bitmapDatas_[line][frame];
+				target.bitmap.bitmapData = mirror&&have_mirror_ ? bitmapDataMirrors_[line][frame] : bitmapDatas_[line][frame];
 				target.x = -centerPos_.x;
 				target.y = -centerPos_.y;
 				return true;
@@ -220,6 +227,8 @@ package com.dmgame.xenon.sprite
 			bitmapDataLoader_.unload();
 			bitmapDataLoader_.contentLoaderInfo.removeEventListener(Event.COMPLETE, onBitmapDataLoadComplete);
 			bitmapDataLoader_ = null;
+			
+			loaded_ = true;
 		}
 	}
 }

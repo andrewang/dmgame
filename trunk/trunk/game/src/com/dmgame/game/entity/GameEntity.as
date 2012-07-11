@@ -63,17 +63,17 @@ package com.dmgame.game.entity
 		 */
 		protected function loadSprite():void	
 		{
-			if(skinAssetEntry_ && actionAssetEntry_) {
+			if( skinAssetEntry_ && actionAssetEntry_ ) {
 				sprite_ = DMSpritePool.singleton_.createSprite(skinAssetEntry_.pictureFolder+'body/'+actionAssetEntry_.picture_, true);
+				sprite_agent_.setSprite(skinAssetEntry_.pictureFolder+'body/'+actionAssetEntry_.picture_, true);
 			}
 			else {
 				if(sprite_) {
 					DMSpritePool.singleton_.freeSprite(sprite_.file);
 					sprite_ = null;
+					sprite_agent_.free();
 				}
 			}
-			
-			sprite_agent_.sprite_ = sprite_;
 		}
 		
 		/**

@@ -9,7 +9,7 @@ package com.dmgame.xenon.sprite
 	{
 		public var spriteReferences_:Dictionary = new Dictionary; // 精灵表
 		
-		public var gcSpriteQuene:Array = [];
+		public var gcSpriteQuene_:Array = [];
 		
 		static public var singleton_:DMSpritePool; // 单件
 		
@@ -31,6 +31,13 @@ package com.dmgame.xenon.sprite
 				spriteReferences_[file] = spriteReference;
 			}
 			++spriteReference.ref_;
+			
+			// 从垃圾列表中移除
+			var index:int = gcSpriteQuene_.indexOf(spriteReference);
+			if(index != -1){
+				gcSpriteQuene_.splice(index, 1);
+			}
+			
 			return spriteReference.sprite_;
 		}
 		
@@ -47,11 +54,12 @@ package com.dmgame.xenon.sprite
 				if(spriteReference.ref_ == 0) {
 					
 					// 放入垃圾回收列表，当前先不做回收
-//					gcSpriteQuene.push(spriteReferences_);
-//					var index:int = gcSpriteQuene.indexOf(spriteReferences_);
-//					if(index != -1){
-//						gcSpriteQuene.splice(index, );
-//					}
+					gcSpriteQuene_.push(spriteReference);
+					if(gcSpriteQuene_.length > 20){
+						spriteReference = gcSpriteQuene_[0];
+						gcSpriteQuene_.shift();
+						gcSprite(spriteReference.sprite_.file);
+					}
 				}
 			}
 		}
@@ -63,7 +71,6 @@ package com.dmgame.xenon.sprite
 		{
 			var spriteReference:DMSpriteReference = spriteReferences_[file];
 			spriteReference.destroy();
-			
 			delete spriteReferences_[file];
 		}
 	}
