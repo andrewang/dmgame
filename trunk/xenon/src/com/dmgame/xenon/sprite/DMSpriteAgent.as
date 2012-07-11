@@ -8,34 +8,42 @@ package com.dmgame.xenon.sprite
 	public class DMSpriteAgent extends Sprite
 	{
 		private var defaultBitmapData_:BitmapData;
-		private var _bitmap_:Bitmap;
-		private var _sprite_:DMSprite;
+		private var bitmap_:Bitmap;
+		private var sprite_:DMSprite;
 		
 		public function DMSpriteAgent( defaultBitmapData:BitmapData = null)
 		{
 			defaultBitmapData_ = defaultBitmapData;
-			_bitmap_ = new Bitmap(defaultBitmapData_);
+			bitmap_ = new Bitmap(defaultBitmapData_);
 			this.addChild(bitmap_);
 		}
 
-		public function get bitmap_():Bitmap
+		public function get bitmap():Bitmap
 		{
-			return _bitmap_;
+			return bitmap_;
 		}
-
-		public function set sprite_(value:DMSprite):void
-		{
-			_sprite_ = value;
+		
+		public function setSprite( file:String, have_mirror:Boolean=false ):void{
+			
+			free();
+			sprite_ = DMSpritePool.singleton_.createSprite(file, have_mirror);
 		}
 
 		public function render(line:uint, frame:uint, mirror:Boolean=false):Boolean{
 			
-			return _sprite_.fill2Bitmap(line, frame, this, mirror);
+			if(sprite_.loaded){
+				return sprite_.fill2Agent(line, frame, this, mirror);
+			}
+			else{
+				bitmap_.bitmapData = defaultBitmapData_;
+				return false;
+			}
 		}
 		
 		public function free():void{
-			if(_sprite_)
-				DMSpritePool.singleton_.freeSprite(_sprite_.file)
+			if(sprite_){
+				DMSpritePool.singleton_.freeSprite(sprite_.file)
+			}
 		}
 	}
 }
