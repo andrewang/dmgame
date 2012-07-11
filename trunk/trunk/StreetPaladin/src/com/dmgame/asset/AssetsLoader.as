@@ -1,6 +1,12 @@
 package com.dmgame.asset
 {
-	import com.dmgame.map.Map;
+	import com.dmgame.logic.map.Map;
+	import com.dmgame.xenon.asset.Asset;
+	import com.dmgame.logic.asset.ActionAssetEntry;
+	import com.dmgame.logic.asset.Assets;
+	import com.dmgame.logic.asset.MapAssetEntry;
+	import com.dmgame.logic.asset.MapGridAsset;
+	import com.dmgame.logic.asset.SkinAssetEntry;
 
 	/**
 	 * 游戏资源加载器

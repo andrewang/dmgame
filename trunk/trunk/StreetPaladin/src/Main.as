@@ -11,6 +11,7 @@ package
 			super();
 			
 			addEventListener(Event.ADDED_TO_STAGE, init);
+		
 		}
 		
 		public function init(event:Event):void
