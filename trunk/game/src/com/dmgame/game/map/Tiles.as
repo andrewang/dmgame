@@ -1,27 +1,17 @@
 package com.dmgame.game.map
 {
-	import com.dmgame.game.scene.DMGame;
+	import com.dmgame.logic.asset.MapConfig;
 	import com.dmgame.xenon.sprite.DMSprite;
 	import com.dmgame.xenon.sprite.DMSpritePool;
 	
 	import flash.display.BitmapData;
 	import flash.geom.Point;
-
+	
 	public class Tiles
 	{
-		protected var tilesFolder_:String;
+		protected var tilesFolder_:String; // 文件夹
 		
-		protected var width_:int;
-		
-		protected var height_:int;
-		
-		protected var tileWidth_:int;
-		
-		protected var tileHeight_:int;
-		
-		protected var tileFormat_:String;
-		
-		protected var sTilesFile_:String;
+		protected var mapTileAsset_:MapConfig; // 地表配置
 		
 		protected var lastRenderTile_:Array = []; // 上次绘制地表
 		
@@ -32,27 +22,22 @@ package com.dmgame.game.map
 		/**
 		 * 构造函数，地表所在目录，地表宽高，切片宽高，缩略图文件
 		 */
-		public function Tiles(tilesFolder:String, width:int, height:int, tileWidth:int, tileHeight:int, tileFormat:String, sTilesFile:String)
+		public function Tiles(tilesFolder:String, mapTileAsset:MapConfig)
 		{
 			tilesFolder_ = tilesFolder;
-			width_ = width;
-			height_ = height;
-			tileWidth_ = tileWidth;
-			tileHeight_ = tileHeight;
-			tileFormat_ = tileFormat;
-			sTilesFile_ = sTilesFile;
+			mapTileAsset_ = mapTileAsset;
 			
-			tileWCount_ = width/tileWidth;
-			tileHCount_ = height/tileHeight;
+			tileWCount_ = mapTileAsset_.mapWidth_/mapTileAsset_.tileWidth_;
+			tileHCount_ = mapTileAsset_.mapHeight_/mapTileAsset_.tileHeight_;
 		}
 		
 		/**
 		 * 绘制
 		 */
-		public function render(screenBitmapData:BitmapData, pos:Point):void
+		public function render(screenBitmapData:BitmapData, posx:int, posy:int, width:int, height:int):void
 		{
-			var sTilePosx:int = (pos.x - tileWidth_) / tileWidth_;
-			var sTilePosy:int = (pos.y - tileHeight_) / tileHeight_;
+			var sTilePosx:int = (posx - mapTileAsset_.tileWidth_) / mapTileAsset_.tileWidth_;
+			var sTilePosy:int = (posy - mapTileAsset_.tileHeight_) / mapTileAsset_.tileHeight_;
 			
 			if(sTilePosx < 0) {
 				sTilePosx = 0;
@@ -61,8 +46,8 @@ package com.dmgame.game.map
 				sTilePosy = 0;
 			}
 			
-			var eTilePosx:int = (pos.x + DMGame.singleton_.stage_.stageWidth + tileWidth_) / tileWidth_;
-			var eTilePosy:int = (pos.y + DMGame.singleton_.stage_.stageHeight + tileHeight_) / tileHeight_;
+			var eTilePosx:int = (posx + width + mapTileAsset_.tileWidth_) / mapTileAsset_.tileWidth_;
+			var eTilePosy:int = (posy + height + mapTileAsset_.tileHeight_) / mapTileAsset_.tileHeight_;
 			
 			if(eTilePosx >= tileWCount_) {
 				eTilePosx = tileWCount_ - 1;
@@ -82,9 +67,9 @@ package com.dmgame.game.map
 					
 					if(tileSprite == null) {
 						// 新的图片，需要加载
-						tileSprite = DMSpritePool.singleton_.createSprite(tilesFolder_+j+'_'+i+'.'+tileFormat_);
+						tileSprite = DMSpritePool.singleton_.createSprite(tilesFolder_+j+'_'+i+'.'+mapTileAsset_.tileFormat_);
 					}
-					tileSprite.render(0, 0, screenBitmapData, new Point(i*tileWidth_-pos.x, j*tileHeight_-pos.y));
+					tileSprite.render(0, 0, screenBitmapData, new Point(i*mapTileAsset_.tileWidth_-posx, j*mapTileAsset_.tileHeight_-posy));
 					
 					currentRenderTile[j+'_'+i] = tileSprite;
 				}

@@ -2,10 +2,10 @@ package com.dmgame.asset
 {
 	import com.dmgame.logic.map.Map;
 	import com.dmgame.xenon.asset.Asset;
-	import com.dmgame.logic.asset.ActionAssetEntry;
+	import com.dmgame.logic.asset.ActionEntry;
 	import com.dmgame.logic.asset.Assets;
-	import com.dmgame.logic.asset.MapAssetEntry;
-	import com.dmgame.logic.asset.MapGridAsset;
+	import com.dmgame.logic.asset.MapEntry;
+	import com.dmgame.logic.asset.MapConfig;
 	import com.dmgame.logic.asset.SkinAssetEntry;
 
 	/**
@@ -53,23 +53,9 @@ package com.dmgame.asset
 				if(Assets.singleton_.actionAsset_[actionFile] == null) {
 					
 					// 加载动作配置文件
-					var asset:Asset = new Asset(ActionAssetEntry.CreateEntry)
+					var asset:Asset = new Asset(ActionEntry.CreateEntry)
 					asset.load(actionFile, onSecondAssetLoadComplete);
 					Assets.singleton_.actionAsset_[actionFile] = asset;
-					
-					++assetLoadingCount_;
-				}
-			}
-			
-			for each(var mapAssetEntry:MapAssetEntry in Assets.singleton_.mapAsset_.entries_)
-			{
-				var config:String = mapAssetEntry.config_;
-				if(Assets.singleton_.mapGridAsset_[config] == null) {
-					
-					// 加载动作配置文件
-					var mapGridAsset:MapGridAsset = new MapGridAsset()
-					mapGridAsset.load(config, onSecondAssetLoadComplete);
-					Assets.singleton_.mapGridAsset_[config] = mapGridAsset;
 					
 					++assetLoadingCount_;
 				}

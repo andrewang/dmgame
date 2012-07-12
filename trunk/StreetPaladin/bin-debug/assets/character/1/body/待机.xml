@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Data>
 	<Picture>assets/character/1/body/待机.png</Picture>
-	<Width>3200</Width>
-	<Height>1100</Height>
 	<Line>5</Line>
 	<Frame>8</Frame>
 	<CenterPos>200,164</CenterPos>

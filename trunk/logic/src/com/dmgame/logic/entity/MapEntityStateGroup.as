@@ -68,6 +68,14 @@ package com.dmgame.logic.entity
 		}
 		
 		/**
+		 * 移动路径
+		 */
+		public function movePath(path:Array):void
+		{
+			
+		}
+		
+		/**
 		 * 移动到指定目标
 		 */
 		public function moveTarget(targetPos:Point):void

@@ -40,31 +40,7 @@ package com.dmgame.xenon.asset
 			
 			xmlLoader_ = new URLLoader(new URLRequest(file));
 			xmlLoader_.addEventListener(Event.COMPLETE, onLoadComplete);
-		}
-		
-		/**
-		 * 保存文件
-		 */
-		public function save(file:String):void
-		{
-			var fileRef:FileReference = new FileReference();
-			fileRef.addEventListener(Event.COMPLETE, onSaveComplete);
-			
-			var xml:XML = new XML;
-			xml.setName('Data');
-			
-			for each(var assetEntry:AssetEntry in entries_)
-			{
-				var objectXml:XML = new XML;
-				objectXml.setName('Object');
-
-				if(assetEntry.Save(objectXml)) {
-					
-					// 添加子节点
-					xml.appendChild(objectXml);
-				}
-			}
-			fileRef.save(xml.toString(), file);
+			xmlLoader_.addEventListener(IOErrorEvent.IO_ERROR, onLoadFailed);
 		}
 		
 		/**
@@ -92,6 +68,7 @@ package com.dmgame.xenon.asset
 				}
 			}
 			xmlLoader_.removeEventListener(Event.COMPLETE, onLoadComplete);
+			xmlLoader_.removeEventListener(IOErrorEvent.IO_ERROR, onLoadFailed);
 			
 			// 触发用户请求的事件函数
 			if(onLoadCompleteEvent_ != null) {
@@ -101,11 +78,18 @@ package com.dmgame.xenon.asset
 		}
 		
 		/**
-		 * 资料保存完成
+		 * 资料加载失败
 		 */
-		private function onSaveComplete(event:Event):void
+		private function onLoadFailed(event:Event):void
 		{
+			xmlLoader_.removeEventListener(Event.COMPLETE, onLoadComplete);
+			xmlLoader_.removeEventListener(IOErrorEvent.IO_ERROR, onLoadFailed);
 			
+			// 触发用户请求的事件函数
+			if(onLoadCompleteEvent_ != null) {
+				onLoadCompleteEvent_();
+				onLoadCompleteEvent_ = null;
+			}
 		}
 	}
 }
