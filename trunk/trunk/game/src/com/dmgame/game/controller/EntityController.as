@@ -1,10 +1,13 @@
 package com.dmgame.game.controller
 {
+	import com.dmgame.game.scene.DMGame;
+	import com.dmgame.logic.astar.AStarRhombus;
+	import com.dmgame.logic.astar.AStarUtils;
+	import com.dmgame.logic.core.Logic;
 	import com.dmgame.logic.entity.Entity;
 	import com.dmgame.logic.entity.EntityDirections;
 	import com.dmgame.logic.entity.MapEntity;
-	import com.dmgame.game.scene.DMGame;
-	import com.dmgame.logic.core.Logic;
+	import com.dmgame.logic.utils.Rhombic;
 	
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
@@ -67,15 +70,29 @@ package com.dmgame.game.controller
 				return;
 			}
 			
+			if(!me_) {
+				return;
+			}
+			
 			// 计算鼠标落点，转换为世界坐标
+			var endPos:Point = Rhombic.pixelTransferCoordinateInRhombic(event.stageX+DMGame.singleton_.camera_.mapPos.x, 
+				event.stageY+DMGame.singleton_.camera_.mapPos.y,
+				DMGame.singleton_.logic_.map.mapConfig_.gridWidth_,
+				DMGame.singleton_.logic_.map.mapConfig_.gridHeight_);
+			
+			var startPos:Point = Rhombic.pixelTransferCoordinateInRhombic(me_.pos.x, 
+				me_.pos.y,
+				DMGame.singleton_.logic_.map.mapConfig_.gridWidth_,
+				DMGame.singleton_.logic_.map.mapConfig_.gridHeight_);
 			
 			// 寻路得出路径
+			path_ = AStarRhombus.findPath(startPos.x, startPos.y, endPos.x, endPos.y, DMGame.singleton_.logic_.map.astarWall_);
+			path_ = AStarUtils.getOptimizeCrossPotArr(path_, 16, DMGame.singleton_.logic_.map.astarWall_);
 			
 			// 测试摄像机移动
 			if(me_) {
 				me_.stateGroup_.moveTarget(new Point(event.stageX+DMGame.singleton_.camera_.mapPos.x, 
 					event.stageY+DMGame.singleton_.camera_.mapPos.y));
-				
 //				me_.skill(0);
 			}
 			

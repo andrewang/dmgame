@@ -27,25 +27,14 @@ package com.dmgame.game.map
 		}
 		
 		/**
-		 * 初始化地图
+		 * 核心资源加载完毕
 		 */
-		override public function init(id:int):Boolean
+		override protected function onMapConfigLoadComplete():void
 		{
-			if(super.init(id)) {
-				
-				// 初始化地表
-				tiles_ = new Tiles('assets/tiles/'+id+'/', 
-					mapGridAsset_.mapWidth_, 
-					mapGridAsset_.mapHeight_,
-					mapGridAsset_.tileWidth_,
-					mapGridAsset_.tileHeight_, 
-					mapGridAsset_.tileFormat_, 
-					'');
-				return true;
-			}
-			else {
-				return false;
-			}
+			super.onMapConfigLoadComplete();
+			
+			// 初始化地表
+			tiles_ = new Tiles('assets/tiles/'+mapId_+'/', mapConfig_);
 		}
 		
 		/**
@@ -78,7 +67,7 @@ package com.dmgame.game.map
 			
 			// 绘制地表
 			if(tiles_ != null) {
-				tiles_.render(screenBitmapData, pos);
+				tiles_.render(screenBitmapData, pos.x, pos.y, screenBitmapData.width, screenBitmapData.height);
 			}
 			
 			// 绘制物件

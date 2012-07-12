@@ -1,6 +1,6 @@
 package com.dmgame.logic.entity
 {
-	import com.dmgame.logic.asset.ActionAssetEntry;
+	import com.dmgame.logic.asset.ActionEntry;
 	import com.dmgame.xenon.asset.Asset;
 	import com.dmgame.logic.asset.Assets;
 	import com.dmgame.logic.asset.SkinAssetEntry;
@@ -22,7 +22,7 @@ package com.dmgame.logic.entity
 		
 		protected var actionAsset_:Asset; // 动作配置
 		
-		protected var actionAssetEntry_:ActionAssetEntry; // 动作配置条目
+		protected var actionAssetEntry_:ActionEntry; // 动作配置条目
 		
 		protected var action_:DMAction = new DMAction; // 动作配置
 		
@@ -92,7 +92,7 @@ package com.dmgame.logic.entity
 			}
 			
 			// 读取动作条目
-			actionAssetEntry_ = (actionAsset_.entries_[actionName_] as ActionAssetEntry);
+			actionAssetEntry_ = (actionAsset_.entries_[actionName_] as ActionEntry);
 			if(actionAssetEntry_) {
 				
 				// 创建动作对象
@@ -141,7 +141,7 @@ package com.dmgame.logic.entity
 		/**
 		 * 获取动作配置
 		 */
-		public function get actionAssetEntry():ActionAssetEntry
+		public function get actionAssetEntry():ActionEntry
 		{
 			return actionAssetEntry_;
 		}

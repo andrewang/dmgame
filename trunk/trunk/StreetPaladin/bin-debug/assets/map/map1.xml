@@ -1,8 +1,8 @@
 <map>
 <id>1</id>
 <hasTile>0</hasTile>
-<loopbg></loopbg><gridW>20</gridW>
-<gridH>20</gridH>
+<loopbg></loopbg><gridW>90</gridW>
+<gridH>45</gridH>
 <tileFormat>jpg</tileFormat>
 <tileX>240</tileX>
 <tileY>250</tileY>

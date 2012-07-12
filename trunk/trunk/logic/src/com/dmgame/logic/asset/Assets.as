@@ -7,7 +7,7 @@ package com.dmgame.logic.asset
 	 */
 	public class Assets
 	{
-		public var mapAsset_:Asset = new Asset(MapAssetEntry.CreateEntry); // 地图配置
+		public var mapAsset_:Asset = new Asset(MapEntry.CreateEntry); // 地图配置
 		
 		public var skinAsset_:Asset = new Asset(SkinAssetEntry.CreateEntry); // 皮肤配置
 		

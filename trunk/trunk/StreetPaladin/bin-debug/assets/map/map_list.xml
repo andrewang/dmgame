@@ -1,72 +1,39 @@
-<?xml version="1.0" encoding="GB2312"?>
+ï»¿<?xml version="1.0" encoding="UTF-8"?>
 <Data>
 	<Object>
 		<ID>1</ID>
-		<Config>assets/map/map1.xml</Config>
-		<Battle>0</Battle>
-		<Name>ÀºÇò³¡</Name>
-		<InvisibleMineScript>InvisibleMineScript1</InvisibleMineScript>
-		<InitMapScript>InitMapScript1</InitMapScript>
+		<Name>ç¯®çƒåœº</Name>
 	</Object>
 	<Object>
 		<ID>2</ID>
-		<Config>assets/map/map2.xml</Config>
-		<Battle>1</Battle>
-		<Name>ÀºÇò³¡Õ½¶·µØÍ¼</Name>
-		<InitMapScript>InitMapScript2</InitMapScript>
+		<Name>ç¯®çƒåœºæˆ˜æ–—åœ°å›¾</Name>
 	</Object>
 	<Object>
 		<ID>3</ID>
-		<Config>assets/map/map3.xml</Config>
-		<Battle>0</Battle>
-		<Name>ÉÏµÛ½Ö</Name>
-		<InitMapScript>InitMapScript3</InitMapScript>
+		<Name>ä¸Šå¸è¡—</Name>
 	</Object>
 	<Object>
 		<ID>4</ID>
-		<Config>assets/map/map4.xml</Config>
-		<Battle>0</Battle>
-		<Name>Î÷½Ö</Name>
-		<InvisibleMineScript>InvisibleMineScript4</InvisibleMineScript>
-		<InitMapScript>InitMapScript4</InitMapScript>
+		<Name>è¥¿è¡—</Name>
 	</Object>
 	<Object>
 		<ID>5</ID>
-		<Config>assets/map/map5.xml</Config>
-		<Battle>0</Battle>
-		<Name>¶«½Ö</Name>
-		<InvisibleMineScript>InvisibleMineScript5</InvisibleMineScript>
-		<InitMapScript>InitMapScript5</InitMapScript>
+		<Name>ä¸œè¡—</Name>
 	</Object>
 	<Object>
 		<ID>6</ID>
-		<Config>assets/map/map6.xml</Config>
-		<Battle>0</Battle>
-		<Name>Z33¸ßĞ£</Name>
-		<InitMapScript>InitMapScript6</InitMapScript>
+		<Name>Z33é«˜æ ¡</Name>
 	</Object>
 	<Object>
 		<ID>7</ID>
-		<Config>assets/map/map7.xml</Config>
-		<Battle>0</Battle>
-		<Name>ºì´½ºóÏï¶«</Name>
-		<InvisibleMineScript>InvisibleMineScript7</InvisibleMineScript>
-		<InitMapScript>InitMapScript7</InitMapScript>
+		<Name>çº¢å”‡åå··ä¸œ</Name>
 	</Object>
 	<Object>
 		<ID>8</ID>
-		<Config>assets/map/map8.xml</Config>
-		<Battle>0</Battle>
-		<Name>ºì´½ºóÏïÎ÷</Name>
-		<InvisibleMineScript>InvisibleMineScript8</InvisibleMineScript>
-		<InitMapScript>InitMapScript8</InitMapScript>
+		<Name>çº¢å”‡åå··è¥¿</Name>
 	</Object>
 	<Object>
 		<ID>9</ID>
-		<Config>assets/map/map9.xml</Config>
-		<Battle>0</Battle>
-		<Name>ÒÅÍüº£Ì²</Name>
-		<InvisibleMineScript>InvisibleMineScript9</InvisibleMineScript>
-		<InitMapScript>InitMapScript9</InitMapScript>
+		<Name>é—å¿˜æµ·æ»©</Name>
 	</Object>
 </Data>

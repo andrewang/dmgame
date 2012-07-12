@@ -2,7 +2,7 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="com.dmgame.logic.core.Logic"/>
-    <classEntry path="com.dmgame.logic.asset.MapAssetEntry"/>
+    <classEntry path="com.dmgame.logic.asset.MapEntry"/>
     <classEntry path="com.dmgame.logic.entity.EntityDirections"/>
     <classEntry path="com.dmgame.logic.entity.MapEntity"/>
     <classEntry path="com.dmgame.logic.entity.MapEntityState"/>
@@ -14,6 +14,10 @@
     <classEntry path="com.dmgame.logic.entity.MapEntity2Directions"/>
     <classEntry path="com.dmgame.logic.entity.MapEntityStateGroup"/>
     <classEntry path="com.dmgame.logic.entity.MapEntityStateMoveDirection"/>
+    <classEntry path="com.dmgame.logic.entity.MapEntityStateMovePath"/>
+    <classEntry path="com.dmgame.logic.asset.MapKeyPointEntry"/>
+    <classEntry path="com.dmgame.logic.asset.MapJumpPointEntry"/>
+    <classEntry path="com.dmgame.logic.grid.MapRhombicGirdData"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
