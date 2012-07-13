@@ -27,8 +27,8 @@ package com.dmgame.game.map
 			tilesFolder_ = tilesFolder;
 			mapTileAsset_ = mapTileAsset;
 			
-			tileWCount_ = mapTileAsset_.mapWidth_/mapTileAsset_.tileWidth_;
-			tileHCount_ = mapTileAsset_.mapHeight_/mapTileAsset_.tileHeight_;
+			tileWCount_ = (mapTileAsset_.mapWidth_ + mapTileAsset_.tileWidth_ - 1)/mapTileAsset_.tileWidth_;
+			tileHCount_ = (mapTileAsset_.mapHeight_ + mapTileAsset_.tileHeight_ - 1)/mapTileAsset_.tileHeight_;
 		}
 		
 		/**

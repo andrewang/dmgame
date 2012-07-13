@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Data>
+	<Width>3500</Width>
+	<Height>2600</Height>
+	<TileW>350</TileW>
+	<TileH>260</TileH>
+	<GridW>90</GridW>
+	<GridH>45</GridH>
+	<Battle>0</Battle>
+	
+	<InvisibleMineScript>InvisibleMineScript9</InvisibleMineScript>
+	
+	<InitMapScript>InitMapScript9</InitMapScript>
+</Data>

@@ -44,9 +44,9 @@ package com.dmgame.logic.map
 		
 		public static var mapEntity2Directions_:MapEntity2Directions = new MapEntity2Directions; // 实体2方向
 		
-		protected var blockGridData_:MapGridData; // 格子配置
+		public var blockGridData_:MapGridData; // 格子配置
 		
-		protected var shadowGridData_:MapGridData; // 格子配置
+		public var shadowGridData_:MapGridData; // 格子配置
 		
 		/**
 		 * 构造函数
@@ -91,9 +91,8 @@ package com.dmgame.logic.map
 		 */
 		protected function onMapConfigLoadComplete():void
 		{
-			// 计算
-			var gridWCount:int = (mapConfig_.mapWidth_ + mapConfig_.gridWidth_ - 1) / mapConfig_.gridWidth_;
-			var gridHCount:int = (mapConfig_.mapHeight_ + mapConfig_.gridHeight_ - 1) / mapConfig_.gridHeight_ * 2 - 1;
+			width_ = mapConfig_.mapWidth_;
+			height_ = mapConfig_.mapHeight_;
 			
 			// 判断地图方向
 			if(mapAssetEntry_.isBattle_) {
@@ -102,12 +101,10 @@ package com.dmgame.logic.map
 			else {
 				mapEntityDirectionsCurrent_ = mapEntity8Directions_;
 			}
-			width_ = mapConfig_.mapWidth_;
-			height_ = mapConfig_.mapHeight_;
 			
 			// 同步加载障碍和阴影
-			blockGridData_ = new MapGridData(gridHCount, gridWCount, mapConfig_.gridWidth_, mapConfig_.gridHeight_);
-			shadowGridData_ = new MapGridData(gridHCount, gridWCount, mapConfig_.gridWidth_, mapConfig_.gridHeight_);
+			blockGridData_ = new MapGridData();
+			shadowGridData_ = new MapGridData();
 			
 			var loader:URLLoader = new URLLoader(new URLRequest('assets/map/'+mapId_+'/block.dat'));
 			loader.dataFormat = URLLoaderDataFormat.BINARY;
