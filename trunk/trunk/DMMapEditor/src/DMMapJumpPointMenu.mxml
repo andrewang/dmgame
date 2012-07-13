@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="256" height="300">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.dmgame.asset.MapJumpPointEntryShell;
+			import com.dmmapeditor.DMMapEditorCore;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			
+			public var posx_:int; // 当前x坐标
+			
+			public var posy_:int; // 当前y坐标
+			
+			protected function dmCancel_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 关闭这个对话框
+				PopUpManager.removePopUp(this);
+			}
+			
+			protected function dmOK_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 在地图上新增这么一个点
+				var jumpPoint:MapJumpPointEntryShell = new MapJumpPointEntryShell;
+				jumpPoint.id_ = DMMapEditorCore.singleton_.nextJumpPointID_++;
+				jumpPoint.posx_ = posx_;
+				jumpPoint.posy_ = posy_;
+				jumpPoint.toMapID_ = int(dmToMapID.text);
+				jumpPoint.toMapPosx_ = int(dmToMapPosx.text);
+				jumpPoint.toMapPosy_ = int(dmToMapPosy.text);
+				DMMapEditorCore.singleton_.jumpPointAsset_.entries_[jumpPoint.id_] = jumpPoint;
+				
+				Alert.show('跳转钻点设置完成', '通知');
+				
+				// 关闭这个对话框
+				PopUpManager.removePopUp(this);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Label x="21" y="29" text="目的点："/>
+	<s:Label x="21" y="78" text="地图编号："/>
+	<s:Label x="21" y="121" text="地图x坐标："/>
+	<s:Label x="21" y="165" text="地图y坐标："/>
+	<s:TextInput id="dmToMapID" x="89" y="68"/>
+	<s:TextInput id="dmToMapPosx" x="89" y="111"/>
+	<s:TextInput id="dmToMapPosy" x="89" y="155"/>
+	<s:Button id="dmCancel" x="89" y="269" label="取消" click="dmCancel_clickHandler(event)"/>
+	<s:Button id="dmOK" x="176" y="269" label="确认" click="dmOK_clickHandler(event)"/>
+</s:Group>

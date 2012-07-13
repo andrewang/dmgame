@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   xmlns:ns1="*"
+					   width="1500" height="750" backgroundColor="#E0E0E0" frameRate="60"
+					   initialize="windowedapplication1_initializeHandler(event)"
+					   keyDown="windowedapplication1_keyDownHandler(event)"
+					   keyUp="windowedapplication1_keyUpHandler(event)"
+					   preloaderChromeColor="#B0B0B0">
+	<fx:Script>
+		<![CDATA[
+			import com.dmgame.asset.MapKeyPointEntryShell;
+			import com.dmgame.logic.astar.AStarRhombus;
+			import com.dmgame.logic.astar.AStarUtils;
+			import com.dmgame.logic.utils.Rhombic;
+			import com.dmgame.xenon.sprite.DMSpritePool;
+			import com.dmmapeditor.DMMapEditorCore;
+			import com.dmmapeditor.DMMapGrid;
+			import com.dmmapeditor.DMMapTool;
+			import com.dmmapeditor.DMMapView;
+			import com.dmmapeditor.DMSmallMapView;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			
+			public var isMouseDown_:Boolean; // 鼠标是否按下
+			
+			public var isRightMouseDown_:Boolean; // 鼠标右键是否按下
+			
+			public var lastMousePosx_:int; // 鼠标坐标
+			
+			public var lastMousePosy_:int; // 鼠标坐标
+			
+			protected var isInited_:Boolean; // 初始化是否完毕
+			
+			protected static var mouseSetGridStatusDefault_:int = 0; // 路点设置模式
+			
+			protected static var mouseSetGridStatusBlock_:int = 1; // 障碍设置模式
+			
+			protected static var mouseSetGridStatusShadow_:int = 2; // 阴影设置模式
+			
+			protected static var mouseSetJumpPoint_:int = 3; // 跳转点设置模式
+			
+			protected static var mouseSetKeyPoint_:int = 4; // 关键点设置模式
+			
+			protected var mouseOp_:int = -1; // 鼠标模式
+			
+			protected var clearOp_:Boolean; // 清理操作
+			
+			protected var lineOp_:Boolean; // 线选模式
+			
+			protected function windowedapplication1_initializeHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 初始化
+				new DMSpritePool;
+				var core:DMMapEditorCore = new DMMapEditorCore;
+				new DMMapView(dmMapView);
+				new DMSmallMapView(dmSmallMapView);
+				new DMMapTool;
+				
+				core.Init(onCoreInited);
+			}
+			
+			protected function onCoreInited():void
+			{
+				// 加载完毕
+				trace('core has been inited.');
+				
+				isInited_ = true;
+				addEventListener(Event.ENTER_FRAME, onEnterFrameHandler);
+			}
+			
+			protected function dmOpen_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				if(!isInited_) {
+					return;
+				}
+				
+				// 打开地图列表对话框
+				var no:DMMapLoadMenu = new DMMapLoadMenu();
+				PopUpManager.addPopUp(no,this,true);
+				PopUpManager.centerPopUp(no);
+			}
+			
+			protected function dmNew_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				if(!isInited_) {
+					return;
+				}
+				
+				// 打开地图新建对话框
+				var no:DMMapNewMenu = new DMMapNewMenu();
+				PopUpManager.addPopUp(no,this,true);
+				PopUpManager.centerPopUp(no);
+				
+				// 初始化地图编号
+				no.dmMapID.text = DMMapEditorCore.singleton_.nextMapID_.toString();
+			}
+			
+			protected function onEnterFrameHandler(event:Event):void
+			{
+				DMMapEditorCore.singleton_.Update();
+				
+				if(DMMapEditorCore.singleton_.mapAssetEntry_) {
+					
+					dmMapName.text = DMMapEditorCore.singleton_.mapAssetEntry_.name_;
+				}
+			}
+			
+			protected function dmSmallMapView_mouseDownHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 激活屏幕移动
+				isMouseDown_ = true;
+				
+				// 触发一次点击
+				updatePosInSmallMapView(event.localX, event.localY);
+			}
+			
+			protected function dmSmallMapView_mouseUpHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 关闭鼠标激活
+				isMouseDown_ = false;
+			}
+			
+			protected function dmSmallMapView_mouseOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 关闭鼠标激活
+				isMouseDown_ = false;
+			}
+			
+			protected function dmSmallMapView_mouseMoveHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 确定当前有在做地图编辑
+				if(isMouseDown_ ) {
+					
+					// 更新坐标
+					updatePosInSmallMapView(event.localX, event.localY);
+				}
+			}
+			
+			protected function updatePosInSmallMapView(mousex:int, mousey:int):void
+			{
+				// 确定当前有在做地图编辑
+				if(DMMapEditorCore.singleton_.mapConfig_ != null) {
+					
+					// 获取鼠标坐标并转换为大图坐标
+					DMMapEditorCore.singleton_.currentPosx_ = mousex * DMSmallMapView.singleton_.scale_ - DMMapView.singleton_.width() / 2;
+					DMMapEditorCore.singleton_.currentPosy_ = mousey * DMSmallMapView.singleton_.scale_ - DMMapView.singleton_.height() / 2;
+					
+					// 修正大图坐标
+					if(DMMapEditorCore.singleton_.currentPosx_ < 0) {
+						DMMapEditorCore.singleton_.currentPosx_ = 0;
+					}
+					else if(DMMapEditorCore.singleton_.currentPosx_ > DMMapEditorCore.singleton_.mapConfig_.mapWidth_ - DMMapView.singleton_.width()) {
+						DMMapEditorCore.singleton_.currentPosx_ = DMMapEditorCore.singleton_.mapConfig_.mapWidth_ - DMMapView.singleton_.width();
+					}
+					
+					if(DMMapEditorCore.singleton_.currentPosy_ < 0) {
+						DMMapEditorCore.singleton_.currentPosy_ = 0;
+					}
+					else if(DMMapEditorCore.singleton_.currentPosy_ > DMMapEditorCore.singleton_.mapConfig_.mapHeight_ - DMMapView.singleton_.height()) {
+						DMMapEditorCore.singleton_.currentPosy_ = DMMapEditorCore.singleton_.mapConfig_.mapHeight_ - DMMapView.singleton_.height();
+					}
+				}
+			}
+			
+			protected function dmBlock_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 障碍编辑模式
+				setMouseOp(mouseSetGridStatusBlock_);
+			}
+			
+			protected function dmShadow_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 阴影编辑模式
+				setMouseOp(mouseSetGridStatusShadow_);
+			}
+			
+			protected function dmDefault_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 路点编辑模式
+				setMouseOp(mouseSetGridStatusDefault_);
+			}
+			
+			protected function dmMapView_mouseDownHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 激活鼠标
+				isMouseDown_ = true;
+				
+				switch(mouseOp_)
+				{
+					case mouseSetGridStatusDefault_:
+						if(lineOp_) {
+							DMMapView.singleton_.grid_.addLinePoint(new Point(event.localX + DMMapEditorCore.singleton_.currentPosx_, 
+								event.localY + DMMapEditorCore.singleton_.currentPosy_));
+						}
+						else {
+							updateGridStatusInMapView(event.localX, event.localY, DMMapGrid.gridStatusDefault);
+						}
+						break;
+					case mouseSetGridStatusBlock_:
+						if(lineOp_) {
+							DMMapView.singleton_.grid_.addLinePoint(new Point(event.localX + DMMapEditorCore.singleton_.currentPosx_, 
+								event.localY + DMMapEditorCore.singleton_.currentPosy_));
+						}
+						else {
+							updateGridStatusInMapView(event.localX, event.localY, DMMapGrid.gridStatusBlock);
+						}
+						break;
+					case mouseSetGridStatusShadow_:
+						if(lineOp_) {
+							DMMapView.singleton_.grid_.addLinePoint(new Point(event.localX + DMMapEditorCore.singleton_.currentPosx_, 
+								event.localY + DMMapEditorCore.singleton_.currentPosy_));
+						}
+						else {
+							updateGridStatusInMapView(event.localX, event.localY, DMMapGrid.gridStatusShadow);
+						}
+						break;
+					case mouseSetJumpPoint_:
+						// 打开地图列表对话框
+						var no:DMMapJumpPointMenu = new DMMapJumpPointMenu();
+						no.posx_ = event.localX + DMMapEditorCore.singleton_.currentPosx_;
+						no.posy_ = event.localY + DMMapEditorCore.singleton_.currentPosy_;
+						
+						PopUpManager.addPopUp(no,this,true);
+						PopUpManager.centerPopUp(no);
+						
+						mouseOp_ = -1;
+						break;
+					case mouseSetKeyPoint_:
+						// 创建新的关键点
+						var keyPoint:MapKeyPointEntryShell = new MapKeyPointEntryShell;
+						keyPoint.id_ = DMMapEditorCore.singleton_.nextKeyPointID_++;
+						keyPoint.posx_ = event.localX + DMMapEditorCore.singleton_.currentPosx_;
+						keyPoint.posy_ = event.localY + DMMapEditorCore.singleton_.currentPosy_;
+						DMMapEditorCore.singleton_.keyPointAsset_.entries_[keyPoint.id_] = keyPoint;
+						
+						Alert.show('关键点设置完成', '通知');
+						mouseOp_ = -1;
+						break;
+				}
+			}
+			
+			protected function dmMapView_mouseMoveHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 显示鼠标所在的世界坐标
+				dmCurrentPosx.text = (event.localX + DMMapEditorCore.singleton_.currentPosx_).toString();
+				dmCurrentPosy.text = (event.localY + DMMapEditorCore.singleton_.currentPosy_).toString();
+				
+				// 刷新该店
+				if(isMouseDown_) {
+					
+					switch(mouseOp_)
+					{
+						case mouseSetGridStatusDefault_:
+							if(!lineOp_) {
+								updateGridStatusInMapView(event.localX, event.localY, DMMapGrid.gridStatusDefault);
+							}
+							break;
+						case mouseSetGridStatusBlock_:
+							if(!lineOp_) {
+								updateGridStatusInMapView(event.localX, event.localY, DMMapGrid.gridStatusBlock);
+							}
+							break;
+						case mouseSetGridStatusShadow_:
+							if(!lineOp_) {
+								updateGridStatusInMapView(event.localX, event.localY, DMMapGrid.gridStatusShadow);
+							}
+							break;
+					}
+				}
+				else if(isRightMouseDown_) {
+					
+					// 拖动屏幕
+					updatePosInMapView(event.localX, event.localY);
+				}
+			}
+			
+			protected function dmMapView_mouseOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 关闭鼠标激活
+				isMouseDown_ = false;
+			}
+			
+			protected function dmMapView_mouseUpHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 关闭鼠标激活
+				isMouseDown_ = false;
+			}
+			
+			protected function updateGridStatusInMapView(mousex:int, mousey:int, gridStatus:int):void
+			{
+				// 开始清理
+				if(clearOp_) {
+					DMMapView.singleton_.grid_.clearGrid(mousex + DMMapEditorCore.singleton_.currentPosx_, 
+						mousey + DMMapEditorCore.singleton_.currentPosy_, gridStatus);
+				}
+				else {
+					DMMapView.singleton_.grid_.setGrid(mousex + DMMapEditorCore.singleton_.currentPosx_, 
+						mousey + DMMapEditorCore.singleton_.currentPosy_, gridStatus);
+				}
+			}
+			
+			protected function dmMapView_rightMouseDownHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				isRightMouseDown_ = true;
+				
+				lastMousePosx_ = event.localX;
+				lastMousePosy_ = event.localY;
+			}
+			
+			protected function dmMapView_rightMouseUpHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				isRightMouseDown_ = false;
+			}
+			
+			protected function updatePosInMapView(mousex:int, mousey:int):void
+			{
+				// 确定当前有在做地图编辑
+				if(DMMapEditorCore.singleton_.mapConfig_ != null) {
+					
+					// 获取鼠标坐标并转换为大图坐标
+					DMMapEditorCore.singleton_.currentPosx_ -= mousex - lastMousePosx_;
+					DMMapEditorCore.singleton_.currentPosy_ -= mousey - lastMousePosy_;
+					
+					lastMousePosx_ = mousex;
+					lastMousePosy_ = mousey;
+					
+					// 修正大图坐标
+					if(DMMapEditorCore.singleton_.currentPosx_ < 0) {
+						DMMapEditorCore.singleton_.currentPosx_ = 0;
+					}
+					else if(DMMapEditorCore.singleton_.currentPosx_ > DMMapEditorCore.singleton_.mapConfig_.mapWidth_ - DMMapView.singleton_.width()) {
+						DMMapEditorCore.singleton_.currentPosx_ = DMMapEditorCore.singleton_.mapConfig_.mapWidth_ - DMMapView.singleton_.width();
+					}
+					
+					if(DMMapEditorCore.singleton_.currentPosy_ < 0) {
+						DMMapEditorCore.singleton_.currentPosy_ = 0;
+					}
+					else if(DMMapEditorCore.singleton_.currentPosy_ > DMMapEditorCore.singleton_.mapConfig_.mapHeight_ - DMMapView.singleton_.height()) {
+						DMMapEditorCore.singleton_.currentPosy_ = DMMapEditorCore.singleton_.mapConfig_.mapHeight_ - DMMapView.singleton_.height();
+					}
+				}
+			}
+			
+			protected function dmSave_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 保存地图
+				DMMapEditorCore.singleton_.saveMap();
+				
+				Alert.show('地图资料保存完毕', '提示');
+			}
+			
+			protected function dmModify_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 弹出地图配置对话框
+				var no:DMMapNewMenu = new DMMapNewMenu();
+				PopUpManager.addPopUp(no,this,true);
+				PopUpManager.centerPopUp(no);
+			}
+			
+			protected function setMouseOp(mouseOp:int):void
+			{
+				mouseOp_ = mouseOp;
+				
+				switch(mouseOp_)
+				{
+					case mouseSetGridStatusDefault_:
+						dmGridStatus.text = '路点';
+						break;
+					case mouseSetGridStatusBlock_:
+						dmGridStatus.text = '障碍';
+						break;
+					case mouseSetGridStatusShadow_:
+						dmGridStatus.text = '阴影';
+						break;
+					case mouseSetJumpPoint_:
+						dmGridStatus.text = '跳转点';
+						break;
+					case mouseSetKeyPoint_:
+						dmGridStatus.text = '关键点';
+						break;
+				}
+			}
+			
+			protected function dmJumpPoint_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				setMouseOp(mouseSetJumpPoint_);
+			}
+			
+			protected function dmKeyPoint_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				setMouseOp(mouseSetKeyPoint_);
+			}
+			
+			protected function windowedapplication1_keyDownHandler(event:KeyboardEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				switch(event.keyCode)
+				{
+					case Keyboard.CONTROL:
+						// 对应格子清理功能
+						clearOp_ = true;
+						break;
+					case Keyboard.SHIFT:
+						lineOp_ = true;
+						break;
+				}
+				
+			}
+			
+			protected function windowedapplication1_keyUpHandler(event:KeyboardEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				switch(event.keyCode)
+				{
+					case Keyboard.CONTROL:
+						// 对应格子清理功能
+						clearOp_ = false;
+						break;
+					case Keyboard.SHIFT:
+						lineOp_ = false;
+						
+						DMMapView.singleton_.grid_.calcGridByLinePoint();
+						break;
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Group id="dmSmallMapView" x="10" y="90" width="200" height="200"
+			 mouseDown="dmSmallMapView_mouseDownHandler(event)"
+			 mouseMove="dmSmallMapView_mouseMoveHandler(event)"
+			 mouseOut="dmSmallMapView_mouseOutHandler(event)"
+			 mouseUp="dmSmallMapView_mouseUpHandler(event)">
+	</s:Group>
+	<s:Label x="10" y="316" text="当前坐标"/>
+	<s:Label x="66" y="316" text="x:"/>
+	<s:Label id="dmCurrentPosx" x="82" y="316" text="?"/>
+	<s:Label x="111" y="316" text="y:"/>
+	<s:Label id="dmCurrentPosy" x="130" y="316" text="?"/>
+	<s:Button id="dmNew" x="88" y="10" label="新建" click="dmNew_clickHandler(event)"/>
+	<s:Button id="dmOpen" x="10" y="10" label="打开" click="dmOpen_clickHandler(event)"/>
+	<s:Button id="dmBlock" x="240" y="10" label="障碍" click="dmBlock_clickHandler(event)"/>
+	<s:Button id="dmShadow" x="321" y="10" label="阴影" click="dmShadow_clickHandler(event)"/>
+	<s:Button id="dmDefault" x="399" y="10" label="路点" click="dmDefault_clickHandler(event)"/>
+	<s:Label id="dmMapName" x="10" y="298" text="???"/>
+	<s:Group id="dmMapView" x="240" y="90" width="1250" height="650"
+			 mouseDown="dmMapView_mouseDownHandler(event)"
+			 mouseMove="dmMapView_mouseMoveHandler(event)"
+			 mouseOut="dmMapView_mouseOutHandler(event)" mouseUp="dmMapView_mouseUpHandler(event)"
+			 rightMouseDown="dmMapView_rightMouseDownHandler(event)"
+			 rightMouseUp="dmMapView_rightMouseUpHandler(event)">
+	</s:Group>
+	<s:Button id="dmSave" x="10" y="39" label="保存" click="dmSave_clickHandler(event)"/>
+	<s:Button id="dmModify" x="88" y="39" label="修改" click="dmModify_clickHandler(event)"/>
+	<s:Label x="495" y="48" text="当前操作模式："/>
+	<s:Label id="dmGridStatus" x="598" y="48" text="无"/>
+	<s:Button id="dmJumpPoint" x="240" y="39" label="跳转点" click="dmJumpPoint_clickHandler(event)"/>
+	<s:Button id="dmKeyPoint" x="321" y="39" label="关键点" click="dmKeyPoint_clickHandler(event)"/>
+	<s:Label x="774" y="10" width="472" height="38" text="ctrl键: 可以帮助您在布置障碍或者阴影时，将格子还原为路点"/>
+</s:WindowedApplication>

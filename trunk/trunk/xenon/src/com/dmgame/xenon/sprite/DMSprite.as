@@ -77,6 +77,10 @@ package com.dmgame.xenon.sprite
 		 */
 		public function destroy():void
 		{
+			if(!loaded_) {
+				return;
+			}
+			
 			for(var line:int=0; line<line_; line++){
 				for(var frame:int=0; frame<frame_; frame++){
 					var tempPos:Point = new Point(0, 0);

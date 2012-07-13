@@ -77,13 +77,13 @@ package com.dmgame.game.controller
 			// 计算鼠标落点，转换为世界坐标
 			var endPos:Point = Rhombic.pixelTransferCoordinateInRhombic(event.stageX+DMGame.singleton_.camera_.mapPos.x, 
 				event.stageY+DMGame.singleton_.camera_.mapPos.y,
-				DMGame.singleton_.logic_.map.mapConfig_.gridWidth_,
-				DMGame.singleton_.logic_.map.mapConfig_.gridHeight_);
+				DMGame.singleton_.logic_.map.blockGridData_.gridWidth,
+				DMGame.singleton_.logic_.map.blockGridData_.gridHeight);
 			
 			var startPos:Point = Rhombic.pixelTransferCoordinateInRhombic(me_.pos.x, 
 				me_.pos.y,
-				DMGame.singleton_.logic_.map.mapConfig_.gridWidth_,
-				DMGame.singleton_.logic_.map.mapConfig_.gridHeight_);
+				DMGame.singleton_.logic_.map.blockGridData_.gridWidth,
+				DMGame.singleton_.logic_.map.blockGridData_.gridHeight);
 			
 			// 寻路得出路径
 			path_ = AStarRhombus.findPath(startPos.x, startPos.y, endPos.x, endPos.y, DMGame.singleton_.logic_.map.astarWall_);

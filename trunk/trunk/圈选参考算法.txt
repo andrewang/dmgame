@@ -1,0 +1,36 @@
+VOID MapBarrierCtrl::SetBarValueByPolygon(POINT* pxPolygon,INT nPtCnt,BYTE bValue)
+{
+	if(nPtCnt<=3||!pxPolygon)return;
+		
+	CRgn	Regoin;
+	Regoin.CreatePolygonRgn(pxPolygon,nPtCnt,ALTERNATE);
+	CRect	rcRgn;
+	Regoin.GetRgnBox(rcRgn);
+	INT		nStartRgnX=0,nStartRgnY=0,nEndRgnX=0,nEndRgnY=0;
+	nStartRgnX=rcRgn.left/BARCELL_W;
+	nStartRgnY=rcRgn.top/BARCELL_H;
+	nEndRgnY=(rcRgn.bottom)/BARCELL_H;
+	nEndRgnX=(rcRgn.right)/BARCELL_W;
+	if(nStartRgnX>=m_nBarW||nStartRgnY>=m_nBarH||nEndRgnX<=0||nEndRgnY<=0)
+		return;
+	nStartRgnX=nStartRgnX<0?0:nStartRgnX;
+	nStartRgnY=nStartRgnY<0?0:nStartRgnY;
+	nEndRgnX=nEndRgnX<m_nBarW?nEndRgnX:m_nBarW-1;
+	nEndRgnY=nEndRgnY<m_nBarH?nEndRgnY:m_nBarH-1;
+	POINT	center;
+	for(INT y=nStartRgnY;y<=nEndRgnY;y++)
+	{
+		for(INT x=nStartRgnX;x<=nEndRgnX;x++)
+		{
+			center.x=x*BARCELL_W+BARCELL_W/2;
+			center.y=y*BARCELL_H+BARCELL_H/2;
+			if(Regoin.PtInRegion(center))
+			{
+				m_pbBarrier[y*m_nBarW+x]=bValue;
+				m_blIsModified=TRUE;
+			}
+		}
+	}
+	SetBarOnPolygonEdge(pxPolygon,nPtCnt,bValue);
+	
+}

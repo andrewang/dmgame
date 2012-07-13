@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="350" height="196" contentBackgroundAlpha="1.0">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.dmgame.asset.BaseMapConfigShell;
+			import com.dmgame.asset.BaseMapEntryShell;
+			import com.dmmapeditor.DMMapEditorCore;
+			import com.dmmapeditor.DMMapTool;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			protected function dmOK_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 判断编号是否存在，如果存在则需要报错
+				if(DMMapEditorCore.singleton_.mapAsset_.entries_[int(dmMapID.text)] != null) {
+					Alert.show('该基础地图已经存在!', '错误');
+					return;
+				}
+				Alert.show('地表切割可能需要几分钟的时间，请耐心等待', '提示');
+				
+				// 加载原图
+				var loader:Loader = new Loader;
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onSourcePictureLoadComplete);
+				loader.load(new URLRequest(dmMapTilePicture.text));
+				
+				// 关闭交互
+				enabled = false;
+			}
+			
+			protected function onSourcePictureLoadComplete(event:Event):void
+			{
+				var loaderInfo:LoaderInfo = (event.currentTarget as LoaderInfo);
+				loaderInfo.removeEventListener(Event.COMPLETE, onSourcePictureLoadComplete);
+				
+				// 计算大小
+				var bitmapData:BitmapData = (loaderInfo.content as Bitmap).bitmapData;
+				
+				// 切割地表
+				DMMapTool.singleton_.cut(bitmapData, 
+					DMMapEditorCore.singleton_.url_+'assets/tiles/'+dmMapID.text+'/',
+					DMMapEditorCore.singleton_.tileWidth_, 
+					DMMapEditorCore.singleton_.tileHeight_);
+				DMMapTool.singleton_.scale2Mosaic(bitmapData,
+					DMMapEditorCore.singleton_.url_+'assets/tiles/'+dmMapID.text+'/',
+					200);
+				
+				// 保存地图基本配置
+				var mapConfig:BaseMapConfigShell = new BaseMapConfigShell;
+				mapConfig.mapWidth_ = bitmapData.width;
+				mapConfig.mapHeight_ = bitmapData.height;
+				mapConfig.tileWidth_ = DMMapEditorCore.singleton_.tileWidth_;
+				mapConfig.tileHeight_ = DMMapEditorCore.singleton_.tileHeight_;
+				mapConfig.tileFormat_ = 'jpg';
+				mapConfig.save(DMMapEditorCore.singleton_.url_+'assets/map/'+dmMapID.text+'/config.xml');
+				
+				// 加载对话框中的变量
+				var mapEntry:BaseMapEntryShell = new BaseMapEntryShell;
+				mapEntry.id_ = int(dmMapID.text);
+				mapEntry.name_ = dmMapName.text;
+				DMMapEditorCore.singleton_.mapAsset_.entries_[mapEntry.id_] = mapEntry;
+				DMMapEditorCore.singleton_.mapAsset_.save(DMMapEditorCore.singleton_.url_+'assets/map/base_map_list.xml');
+				
+				Alert.show('新建成功', '提示');
+				
+				// 判断当前选择的是哪一个，如果有效，则打开该地图
+				DMMapEditorCore.singleton_.addMap(mapEntry.id_);
+				DMMapEditorCore.singleton_.loadMap(mapEntry.id_);
+				
+				// 关闭这个对话框
+				PopUpManager.removePopUp(this);
+			}
+			
+			protected function dmCancel_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				// 关闭这个对话框
+				PopUpManager.removePopUp(this);
+			}
+			
+			protected function dmMapTilePictureBrower_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				var fileForOpen:File = new File(); 
+				try 
+				{ 
+					fileForOpen.browseForOpen("open"); 
+					fileForOpen.addEventListener(Event.SELECT, onOpenMapTilePicture); 
+				} 
+				catch (error:Error) 
+				{ 
+					trace("Failed:"+error.message); 
+				} 
+			} 
+			
+			private function onOpenMapTilePicture(e:Event):void 
+			{ 
+				var fileForOpen:File = e.target as File;
+				dmMapTilePicture.text = fileForOpen.nativePath;
+				fileForOpen.removeEventListener(Event.SELECT, onOpenMapTilePicture);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Label x="10" y="28" text="地图编号："/>
+	<s:Label x="10" y="73" text="地图名称："/>
+	<mx:TextInput id="dmMapName" x="95" y="63" width="128" fontFamily="中易宋体"/>
+	<s:Button id="dmOK" x="192" y="165" label="确定" click="dmOK_clickHandler(event)"/>
+	<s:Button id="dmCancel" x="270" y="165" label="取消" click="dmCancel_clickHandler(event)"/>
+	<s:TextInput id="dmMapID" x="95" y="18" fontFamily="中易宋体"/>
+	<s:Label x="10" y="114" text="地表图片："/>
+	<mx:TextInput id="dmMapTilePicture" x="95" y="104" width="128"/>
+	<s:Button id="dmMapTilePictureBrower" x="231" y="106" label="浏览"
+			  click="dmMapTilePictureBrower_clickHandler(event)"/>
+</s:Group>

@@ -1,0 +1,11 @@
+<Data>
+  <Width>4800</Width>
+  <Height>2500</Height>
+  <TileW>240</TileW>
+  <TileH>250</TileH>
+  <GridW>90</GridW>
+  <GridH>45</GridH>
+  <Battle>true</Battle>
+  <InvisibleMineScript>null</InvisibleMineScript>
+  <InitMapScript>null</InitMapScript>
+</Data>
