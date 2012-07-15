@@ -12,6 +12,7 @@ package com.dmmapeditor
 	import com.dmgame.dmlogic.grid.MapGridData;
 	
 	import flash.events.Event;
+	import flash.filesystem.File;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 
@@ -92,6 +93,9 @@ package com.dmmapeditor
 			var editorXmlList:XMLList = editorXml.child("url");
 			if(editorXmlList.length() > 0) {
 				url_ = editorXmlList[0].text();
+			}
+			else {
+				url_ = File.applicationDirectory.nativePath+'/';
 			}
 			
 			editorXmlList = editorXml.child("gridWidth");
