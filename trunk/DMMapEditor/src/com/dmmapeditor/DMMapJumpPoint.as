@@ -1,6 +1,6 @@
 package com.dmmapeditor
 {
-	import com.dmgame.logic.asset.MapJumpPointEntry;
+	import com.dmgame.dmlogic.asset.MapJumpPointEntry;
 	import com.dmgame.xenon.asset.Asset;
 	import com.dmgame.xenon.asset.AssetEntry;
 	

@@ -6,10 +6,10 @@ package com.dmmapeditor
 	import com.dmgame.asset.BaseMapGridDataShell;
 	import com.dmgame.asset.MapJumpPointEntryShell;
 	import com.dmgame.asset.MapKeyPointEntryShell;
-	import com.dmgame.logic.asset.MapJumpPointEntry;
-	import com.dmgame.logic.asset.MapKeyPointEntry;
-	import com.dmgame.logic.astar.AstarWall;
-	import com.dmgame.logic.grid.MapGridData;
+	import com.dmgame.dmlogic.asset.MapJumpPointEntry;
+	import com.dmgame.dmlogic.asset.MapKeyPointEntry;
+	import com.dmgame.dmlogic.astar.AstarWall;
+	import com.dmgame.dmlogic.grid.MapGridData;
 	
 	import flash.events.Event;
 	import flash.net.URLLoader;

@@ -1,6 +1,6 @@
 package com.dmgame.asset
 {
-	import com.dmgame.logic.asset.MapEntry;
+	import com.dmgame.dmlogic.asset.MapEntry;
 	import com.dmgame.xenon.asset.AssetEntry;
 
 	public class BaseMapEntryShell extends AssetEntry

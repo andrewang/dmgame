@@ -1,6 +1,6 @@
 package com.dmgame.asset
 {
-	import com.dmgame.logic.asset.MapConfig;
+	import com.dmgame.dmlogic.asset.MapConfig;
 	
 	import flash.events.Event;
 	import flash.filesystem.File;

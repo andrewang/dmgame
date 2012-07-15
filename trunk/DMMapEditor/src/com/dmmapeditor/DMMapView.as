@@ -3,8 +3,8 @@ package com.dmmapeditor
 	import com.dmgame.asset.BaseMapConfigShell;
 	import com.dmgame.asset.BaseMapEntryShell;
 	import com.dmgame.asset.BaseMapGridDataShell;
-	import com.dmgame.game.map.Tiles;
-	import com.dmgame.logic.grid.MapGridData;
+	import com.dmgame.dmgame.map.Tiles;
+	import com.dmgame.dmlogic.grid.MapGridData;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -48,6 +48,11 @@ package com.dmmapeditor
 		
 		public function Init(mapAssetEntry:BaseMapEntryShell, mapTileAsset:BaseMapConfigShell, blockGridData:BaseMapGridDataShell, shadowGridData:BaseMapGridDataShell):void
 		{
+			// child方式
+			if(grid_) {
+				spriteElement.removeChild(grid_);
+			}
+			
 			// 初始化对象
 			tile_ = new Tiles(DMMapEditorCore.singleton_.url_+'assets/tiles/'+mapAssetEntry.id_+'/', mapTileAsset);
 			grid_ = new DMMapGrid(mapTileAsset, blockGridData, shadowGridData);

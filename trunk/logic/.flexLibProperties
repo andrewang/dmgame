@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
-    <classEntry path="com.dmgame.logic.core.Logic"/>
-    <classEntry path="com.dmgame.logic.asset.MapEntry"/>
-    <classEntry path="com.dmgame.logic.entity.EntityDirections"/>
-    <classEntry path="com.dmgame.logic.entity.MapEntity"/>
-    <classEntry path="com.dmgame.logic.entity.MapEntityState"/>
-    <classEntry path="com.dmgame.logic.entity.MapEntityStateMoveTarget"/>
-    <classEntry path="com.dmgame.logic.entity.MapEntityStateStandBy"/>
-    <classEntry path="com.dmgame.logic.entity.MapEntityStateSkill"/>
-    <classEntry path="com.dmgame.logic.entity.MapEntityDirections"/>
-    <classEntry path="com.dmgame.logic.entity.MapEntity8Directions"/>
-    <classEntry path="com.dmgame.logic.entity.MapEntity2Directions"/>
-    <classEntry path="com.dmgame.logic.entity.MapEntityStateGroup"/>
-    <classEntry path="com.dmgame.logic.entity.MapEntityStateMoveDirection"/>
-    <classEntry path="com.dmgame.logic.entity.MapEntityStateMovePath"/>
-    <classEntry path="com.dmgame.logic.asset.MapKeyPointEntry"/>
-    <classEntry path="com.dmgame.logic.asset.MapJumpPointEntry"/>
-    <classEntry path="com.dmgame.logic.grid.MapRhombicGirdData"/>
+    <classEntry path="com.dmgame.dmlogic.core.Logic"/>
+    <classEntry path="com.dmgame.dmlogic.asset.MapEntry"/>
+    <classEntry path="com.dmgame.dmlogic.entity.EntityDirections"/>
+    <classEntry path="com.dmgame.dmlogic.entity.MapEntity"/>
+    <classEntry path="com.dmgame.dmlogic.entity.MapEntityState"/>
+    <classEntry path="com.dmgame.dmlogic.entity.MapEntityStateMoveTarget"/>
+    <classEntry path="com.dmgame.dmlogic.entity.MapEntityStateStandBy"/>
+    <classEntry path="com.dmgame.dmlogic.entity.MapEntityStateSkill"/>
+    <classEntry path="com.dmgame.dmlogic.entity.MapEntityDirections"/>
+    <classEntry path="com.dmgame.dmlogic.entity.MapEntity8Directions"/>
+    <classEntry path="com.dmgame.dmlogic.entity.MapEntity2Directions"/>
+    <classEntry path="com.dmgame.dmlogic.entity.MapEntityStateGroup"/>
+    <classEntry path="com.dmgame.dmlogic.entity.MapEntityStateMoveDirection"/>
+    <classEntry path="com.dmgame.dmlogic.entity.MapEntityStateMovePath"/>
+    <classEntry path="com.dmgame.dmlogic.asset.MapKeyPointEntry"/>
+    <classEntry path="com.dmgame.dmlogic.asset.MapJumpPointEntry"/>
+    <classEntry path="com.dmgame.dmlogic.grid.MapRhombicGirdData"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
