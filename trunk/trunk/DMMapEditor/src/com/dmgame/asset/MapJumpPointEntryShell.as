@@ -1,6 +1,6 @@
 package com.dmgame.asset
 {
-	import com.dmgame.logic.asset.MapJumpPointEntry;
+	import com.dmgame.dmlogic.asset.MapJumpPointEntry;
 	import com.dmgame.xenon.asset.AssetEntry;
 	
 	public class MapJumpPointEntryShell extends MapJumpPointEntry

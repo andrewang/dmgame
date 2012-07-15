@@ -10,7 +10,7 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="3" linkType="1" path="/xenon/bin/xenon.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/logic/bin/logic.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/dmlogic/bin/dmlogic.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

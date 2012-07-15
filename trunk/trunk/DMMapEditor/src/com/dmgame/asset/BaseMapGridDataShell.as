@@ -8,9 +8,9 @@ package com.dmgame.asset
 	import flash.utils.Endian;
 	
 	import mx.controls.Alert;
-	import com.dmgame.logic.grid.MapGridData;
-	import com.dmgame.logic.grid.MapGridDataParse;
-	import com.dmgame.logic.grid.MapGridDataSerialize;
+	import com.dmgame.dmlogic.grid.MapGridData;
+	import com.dmgame.dmlogic.grid.MapGridDataParse;
+	import com.dmgame.dmlogic.grid.MapGridDataSerialize;
 
 	public class BaseMapGridDataShell extends MapGridData
 	{

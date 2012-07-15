@@ -11,8 +11,8 @@
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
       <libraryPathEntry kind="3" linkType="1" path="/xenon/bin/xenon.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/logic/bin/logic.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/game/bin/game.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/dmgame/bin/dmgame.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/dmlogic/bin/dmlogic.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

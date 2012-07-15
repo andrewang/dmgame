@@ -1,6 +1,6 @@
 package com.dmmapeditor
 {
-	import com.dmgame.logic.asset.MapKeyPointEntry;
+	import com.dmgame.dmlogic.asset.MapKeyPointEntry;
 	import com.dmgame.xenon.asset.Asset;
 	
 	import flash.display.BitmapData;

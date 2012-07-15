@@ -2,8 +2,8 @@ package com.dmmapeditor
 {
 	import com.dmgame.asset.BaseMapConfigShell;
 	import com.dmgame.asset.BaseMapGridDataShell;
-	import com.dmgame.logic.grid.MapGridData;
-	import com.dmgame.logic.utils.Rhombic;
+	import com.dmgame.dmlogic.grid.MapGridData;
+	import com.dmgame.dmlogic.utils.Rhombic;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -137,7 +137,7 @@ package com.dmmapeditor
 		
 		protected function updateGridBitmapData(gridX:int, gridY:int):void
 		{
-			if(gridX < 0 && gridX >= gridWCount_ && gridY < 0 && gridY >= gridHCount_) {
+			if(gridX < 0 || gridX >= gridWCount_ || gridY < 0 || gridY >= gridHCount_) {
 				return;
 			}
 			

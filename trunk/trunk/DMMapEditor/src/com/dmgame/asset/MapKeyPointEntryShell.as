@@ -1,6 +1,6 @@
 package com.dmgame.asset
 {
-	import com.dmgame.logic.asset.MapKeyPointEntry;
+	import com.dmgame.dmlogic.asset.MapKeyPointEntry;
 	import com.dmgame.xenon.asset.AssetEntry;
 	
 	public class MapKeyPointEntryShell extends MapKeyPointEntry

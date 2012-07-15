@@ -11,9 +11,9 @@
 	<fx:Script>
 		<![CDATA[
 			import com.dmgame.asset.MapKeyPointEntryShell;
-			import com.dmgame.logic.astar.AStarRhombus;
-			import com.dmgame.logic.astar.AStarUtils;
-			import com.dmgame.logic.utils.Rhombic;
+			import com.dmgame.dmlogic.astar.AStarRhombus;
+			import com.dmgame.dmlogic.astar.AStarUtils;
+			import com.dmgame.dmlogic.utils.Rhombic;
 			import com.dmgame.xenon.sprite.DMSpritePool;
 			import com.dmmapeditor.DMMapEditorCore;
 			import com.dmmapeditor.DMMapGrid;
