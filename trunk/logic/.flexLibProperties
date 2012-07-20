@@ -14,7 +14,7 @@
     <classEntry path="com.dmgame.dmlogic.entity.MapEntity2Directions"/>
     <classEntry path="com.dmgame.dmlogic.entity.MapEntityStateGroup"/>
     <classEntry path="com.dmgame.dmlogic.entity.MapEntityStateMoveDirection"/>
-    <classEntry path="com.dmgame.dmlogic.entity.MapEntityStateMovePath"/>
+    <classEntry path="com.dmgame.dmlogic.entity.MapEntityStateMoveTargetPath"/>
     <classEntry path="com.dmgame.dmlogic.asset.MapKeyPointEntry"/>
     <classEntry path="com.dmgame.dmlogic.asset.MapJumpPointEntry"/>
     <classEntry path="com.dmgame.dmlogic.grid.MapRhombicGirdData"/>
