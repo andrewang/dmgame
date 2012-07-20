@@ -1,6 +1,6 @@
-package com.dmgame.game.object
+package com.dmgame.dmgame.object
 {
-	import com.dmgame.game.entity.GameEntity;
+	import com.dmgame.dmgame.entity.GameEntity;
 	
 	import flash.display.BitmapData;
 	import flash.geom.Point;

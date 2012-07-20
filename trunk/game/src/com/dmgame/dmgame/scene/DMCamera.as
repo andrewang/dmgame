@@ -1,8 +1,8 @@
-package com.dmgame.game.scene
+package com.dmgame.dmgame.scene
 {
-	import com.dmgame.logic.entity.Entity;
-	import com.dmgame.logic.entity.MapEntity;
-	import com.dmgame.game.map.GameMap;
+	import com.dmgame.dmlogic.entity.Entity;
+	import com.dmgame.dmlogic.entity.MapEntity;
+	import com.dmgame.dmgame.map.GameMap;
 	
 	import flash.events.TimerEvent;
 	import flash.geom.Point;

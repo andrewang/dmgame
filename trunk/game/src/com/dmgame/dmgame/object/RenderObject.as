@@ -1,4 +1,4 @@
-package com.dmgame.game.object
+package com.dmgame.dmgame.object
 {
 	import flash.display.BitmapData;
 	import flash.geom.Point;

@@ -1,10 +1,10 @@
-package com.dmgame.game.scene
+package com.dmgame.dmgame.scene
 {
-	import com.dmgame.logic.asset.Assets;
-	import com.dmgame.game.controller.EntityController;
-	import com.dmgame.logic.core.Logic;
-	import com.dmgame.game.map.GameMap;
-	import com.dmgame.logic.map.Map;
+	import com.dmgame.dmlogic.asset.Assets;
+	import com.dmgame.dmgame.controller.EntityController;
+	import com.dmgame.dmlogic.core.Logic;
+	import com.dmgame.dmgame.map.GameMap;
+	import com.dmgame.dmlogic.map.Map;
 	import com.dmgame.xenon.sprite.DMSpritePool;
 	
 	import flash.display.Bitmap;

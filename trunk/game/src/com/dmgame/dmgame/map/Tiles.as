@@ -1,6 +1,6 @@
-package com.dmgame.game.map
+package com.dmgame.dmgame.map
 {
-	import com.dmgame.logic.asset.MapConfig;
+	import com.dmgame.dmlogic.asset.MapConfig;
 	import com.dmgame.xenon.sprite.DMSprite;
 	import com.dmgame.xenon.sprite.DMSpritePool;
 	

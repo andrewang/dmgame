@@ -1,7 +1,7 @@
-package com.dmgame.game.entity
+package com.dmgame.dmgame.entity
 {
-	import com.dmgame.game.scene.DMGame;
-	import com.dmgame.logic.map.Map;
+	import com.dmgame.dmgame.scene.DMGame;
+	import com.dmgame.dmlogic.map.Map;
 	import com.dmgame.xenon.sprite.DMSprite;
 	import com.dmgame.xenon.sprite.DMSpriteAgent;
 	import com.dmgame.xenon.sprite.DMSpritePool;
@@ -9,7 +9,7 @@ package com.dmgame.game.entity
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.geom.Point;
-	import com.dmgame.logic.entity.MapEntity;
+	import com.dmgame.dmlogic.entity.MapEntity;
 	
 	/**
 	 * 游戏实体，带绘制功能
