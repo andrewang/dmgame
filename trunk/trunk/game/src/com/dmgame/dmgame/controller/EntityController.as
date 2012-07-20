@@ -1,13 +1,13 @@
-package com.dmgame.game.controller
+package com.dmgame.dmgame.controller
 {
-	import com.dmgame.game.scene.DMGame;
-	import com.dmgame.logic.astar.AStarRhombus;
-	import com.dmgame.logic.astar.AStarUtils;
-	import com.dmgame.logic.core.Logic;
-	import com.dmgame.logic.entity.Entity;
-	import com.dmgame.logic.entity.EntityDirections;
-	import com.dmgame.logic.entity.MapEntity;
-	import com.dmgame.logic.utils.Rhombic;
+	import com.dmgame.dmgame.scene.DMGame;
+	import com.dmgame.dmlogic.astar.AStarRhombus;
+	import com.dmgame.dmlogic.astar.AStarUtils;
+	import com.dmgame.dmlogic.core.Logic;
+	import com.dmgame.dmlogic.entity.Entity;
+	import com.dmgame.dmlogic.entity.EntityDirections;
+	import com.dmgame.dmlogic.entity.MapEntity;
+	import com.dmgame.dmlogic.utils.Rhombic;
 	
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
@@ -74,28 +74,9 @@ package com.dmgame.game.controller
 				return;
 			}
 			
-			// 计算鼠标落点，转换为世界坐标
-			var endPos:Point = Rhombic.pixelTransferCoordinateInRhombic(event.stageX+DMGame.singleton_.camera_.mapPos.x, 
-				event.stageY+DMGame.singleton_.camera_.mapPos.y,
-				DMGame.singleton_.logic_.map.blockGridData_.gridWidth,
-				DMGame.singleton_.logic_.map.blockGridData_.gridHeight);
-			
-			var startPos:Point = Rhombic.pixelTransferCoordinateInRhombic(me_.pos.x, 
-				me_.pos.y,
-				DMGame.singleton_.logic_.map.blockGridData_.gridWidth,
-				DMGame.singleton_.logic_.map.blockGridData_.gridHeight);
-			
-			// 寻路得出路径
-			path_ = AStarRhombus.findPath(startPos.x, startPos.y, endPos.x, endPos.y, DMGame.singleton_.logic_.map.astarWall_);
-			path_ = AStarUtils.getOptimizeCrossPotArr(path_, 16, DMGame.singleton_.logic_.map.astarWall_);
-			
-			// 测试摄像机移动
-			if(me_) {
-				me_.stateGroup_.moveTarget(new Point(event.stageX+DMGame.singleton_.camera_.mapPos.x, 
-					event.stageY+DMGame.singleton_.camera_.mapPos.y));
-//				me_.skill(0);
-			}
-			
+			me_.stateGroup_.movePath(new Point(event.stageX+DMGame.singleton_.camera_.mapPos.x, 
+				event.stageY+DMGame.singleton_.camera_.mapPos.y));
+
 			// 移动事件接出
 			//onMove(me_.pos, new Point(event.stageX, event.stageY));
 		}

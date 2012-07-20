@@ -1,14 +1,14 @@
-package com.dmgame.game.map
+package com.dmgame.dmgame.map
 {
-	import com.dmgame.logic.entity.Entity;
-	import com.dmgame.game.entity.GameEntity;
-	import com.dmgame.logic.entity.MapEntity;
-	import com.dmgame.game.object.EntityObject;
-	import com.dmgame.game.object.RenderObject;
+	import com.dmgame.dmlogic.entity.Entity;
+	import com.dmgame.dmgame.entity.GameEntity;
+	import com.dmgame.dmlogic.entity.MapEntity;
+	import com.dmgame.dmgame.object.EntityObject;
+	import com.dmgame.dmgame.object.RenderObject;
 	
 	import flash.display.BitmapData;
 	import flash.geom.Point;
-	import com.dmgame.logic.map.Map;
+	import com.dmgame.dmlogic.map.Map;
 
 	/**
 	 * 游戏地图，带绘制功能
